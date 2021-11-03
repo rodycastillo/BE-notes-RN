@@ -8,8 +8,14 @@ const app = express();
 // conetion to db
 const mongoose = require('mongoose');
 
-const uri = 'mongodb+srv://carlo1999:A3zyGcgEC1hyV3Uf@notas.cx3ue.mongodb.net/carlo1999'
-
+// const dbConnection = async () => {
+//   try {
+//     await mongoose.connect( process.env.MONGODB_CNN, {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//       useCreateIndex: true,
+//       useFindAndModify: false
+ 
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -17,12 +23,20 @@ const options = {
   useFindAndModify: false
 };
 
-mongoose.connect(uri, options).then(
+mongoose.connect('mongodb+srv://carlo1999:A3zyGcgEC1hyV3Uf@notas.cx3ue.mongodb.net/carlo1999', options).then(
   /** ready to use. The `mongoose.connect()` promise resolves to mongoose instance. */
   () => { console.log('Connected a DB') },
   /** handle initial connection error */
   err => { console.log(err) }
 );
+
+// const Server = require('./models/server');
+
+
+// const server = new Server();
+
+// server.listen();
+
 
 // Middleware
 app.use(morgan('tiny'));
@@ -43,7 +57,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.set('port', process.env.PORT || 1999)
+app.set('port', process.env.PORT || 2021)
 app.listen(app.get('port'), () => {
     console.log(`Listen in port http://localhost:${app.get('port')}`);
 })
