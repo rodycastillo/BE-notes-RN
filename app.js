@@ -46,6 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', require('./routes/nota'));
+app.use('/api', require('./routes/user'));
 
 // Middleware para Vue.js router modo history
 const history = require('connect-history-api-fallback');
