@@ -29,10 +29,10 @@ router.post('/', async(req, res) => {
       })
 
   } catch (error) {
-    return res.status(500).json({
-        mensaje: 'Ocurrio un error',
-        error
-    })
+      return res.status(500).json({
+          mensaje: 'Ocurrio un error',
+          error
+      })
   }
 })
 

@@ -1,14 +1,12 @@
 import express from 'express';
+import User from '../models/user'
+const { verificarAuth } = require('../middlewares/auth.js')
 
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 // Filter camps of user
 const _ = require('underscore');
-
-import User from '../models/user'
-
-const { verificationAuth } = require('../middlewares/auth')
 
 // ROUTES
 
@@ -32,20 +30,22 @@ router.post('/nuevo-usuario', async(req, res)=>{
     }
 })
 
-router.put('/usuario/:id', verificationAuth, async(req, res) => {
+router.put('/usuario/:id', [verificarAuth], async(req, res) => {
     const _id = req.params.id;
-    const body = _.pick(req.body, ['nombre', 'email', 'password', 'active'])
+    const body = _.pick(req.body, ['nombre', 'email', 'password', 'activo'])
 
     if(body.password) {
         body.password = bcrypt.hashSync(req.body.password, saltRounds)
     }
 
     try {
-        const userDB = await User.findByIdAndUpdate(_id, body, {new: true, runValidators: true})
+
+        const userDB = await User.findByIdAndUpdate(_id, body, {new: true, runValidators: true});
         return res.json(userDB)
+
     } catch (error) {
-        return res.status(500).json({
-            mensaje: 'Ocurrio un error',
+        return res.status(400).json({
+            mensaje: 'Error al actualizar un usuario',
             error
         })
     }
